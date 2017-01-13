@@ -17,7 +17,7 @@ TTY_PURPLE=\033[1;35m
 
 all:$(TARGET)
 	@echo "$< Build Over $(CUTLINE) $(TTY_GREEN)"
-	@echo "Running...."
+	@echo "Launching...."
 	@echo "$(TTY_NONE)"
 	@./$<
 
