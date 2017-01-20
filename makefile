@@ -19,15 +19,20 @@ all:$(TARGET)
 	@echo "$< Build Over $(CUTLINE) $(TTY_GREEN)"
 	@echo "Launching...."
 	@echo "$(TTY_NONE)"
-	./$< -c makefile
+	# ./$< -c makefile
 
 $(TARGET):src/*.c src/*.h
 	@echo "Compiling $< $(CUTLINE) $(TTY_RED)"
 	$(CC) $(CFLAGS) -o $@ $<
 	@echo "$(TTY_NONE)"
 
+install:$(TARGET)
+	@echo "$@ $(CUTLINE)"
+	cp $< /usr/local/bin/
 
+uninstall:
+	rm /usr/local/bin/xd
 
-.PHONY: clean
+.PHONY: clean unsintall
 clean:
 	rm -rf $(TARGET)
