@@ -19,9 +19,9 @@ all:$(TARGET)
 	@echo "$< Build Over $(CUTLINE) $(TTY_GREEN)"
 	@echo "Launching...."
 	@echo "$(TTY_NONE)"
-	./$< arg1 arg2 arg3 -h
+	./$< -c makefile
 
-$(TARGET):src/*.c
+$(TARGET):src/*.c src/*.h
 	@echo "Compiling $< $(CUTLINE) $(TTY_RED)"
 	$(CC) $(CFLAGS) -o $@ $<
 	@echo "$(TTY_NONE)"
