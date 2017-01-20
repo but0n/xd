@@ -1,5 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include "core.h"
 
 #define BLANK '.'	// You can custom blank character by redefine here
 
@@ -17,14 +16,11 @@ void handleFile(FILE *fileCache) {
 		}
 
 		// handle Ascii detail area
-		if((cache >= '!') && (cache <= '~')) {
-			ascii[size%16] = cache;
-		} else {
-			ascii[size%16] = BLANK;
-		}
+		ascii[size%16] = ((cache >= '!') && (cache <= '~')) ? cache : BLANK;
 		// print this byte
 		printf("%02x ", cache);
 		size++;
+
 		if (!(size%16)) {
 			printf("\t%s", ascii);
 		}
