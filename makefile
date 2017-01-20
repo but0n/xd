@@ -1,4 +1,4 @@
-TARGET=img2img
+TARGET=xd
 CC=gcc
 LIBDIR=-I.
 COMMONFLAGS=-Wall -std=c99
@@ -19,7 +19,7 @@ all:$(TARGET)
 	@echo "$< Build Over $(CUTLINE) $(TTY_GREEN)"
 	@echo "Launching...."
 	@echo "$(TTY_NONE)"
-	@./$<
+	./$< arg1 arg2 arg3 -h
 
 $(TARGET):src/*.c
 	@echo "Compiling $< $(CUTLINE) $(TTY_RED)"
