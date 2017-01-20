@@ -19,7 +19,7 @@ all:$(TARGET)
 	@echo "$< Build Over $(CUTLINE) $(TTY_GREEN)"
 	@echo "Launching...."
 	@echo "$(TTY_NONE)"
-	# ./$< -c makefile
+	./$< -c -l 20 makefile
 
 $(TARGET):src/*.c src/*.h
 	@echo "Compiling $< $(CUTLINE) $(TTY_RED)"

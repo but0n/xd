@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <stdlib.h>
 #include "core.h"
 #include "tty.h"
 
@@ -29,10 +31,14 @@ void handleFile(FILE *fileCache) {
 
 		size++;
 
-		if (!(size%16)) {
+		if (!(size%16) || (size == gOptRegister>>LEN_OFFSET)) {
+			//	Empty bytes
+			printEmptyBin(size%16);
 			PRINTCOLOR(TTY_LIGHT_BLUE);
-			printf("\t%s", ascii);
+			printf("    %s", ascii);
 			PRINTCOLOR(TTY_NONE);
+			if (size == gOptRegister>>LEN_OFFSET)
+				break;
 		}
 	}
 	printf("\nTotal %d Byte\n", size);
@@ -43,7 +49,7 @@ void read(const char *filename) {
 	printf("File name: %s\n", filename);
 	FILE *fp = NULL;
 	if ((fp = fopen(filename, "rb")) == NULL)
-		printf("Couldn't open file\n");
+		printf("Couldn't open this file\n");
 	else {
 		handleFile(fp);
 	}
@@ -52,8 +58,8 @@ void read(const char *filename) {
 }
 
 void setupOptReg(const char *flag) {
-	while(*flag) {
-		switch (*flag++) {
+	while(*++flag) {
+		switch (*flag) {
 			case FLAG_HELP:
 				gOptRegister |= USAGEENABLE;
 				PRINTUSAGE();
@@ -61,10 +67,26 @@ void setupOptReg(const char *flag) {
 			case FLAG_COLOR:
 				gOptRegister |= COLORENABLE;
 				break;
+			case FLAG_LENGTH:
+				gOptRegister |= STOPENABLE;
+				break;
+			default:
+				printf("Error option '%c'\n", *flag);
+				break;
 		}
 	}
 }
 
+void printEmptyBin(unsigned char len) {
+	if (len) {
+		len = 16 - len;
+		while(len--) {
+			printf("   ");
+			if (len==8)
+				printf(" ");
+		}
+	}
+}
 
 int main(int argc, char const *argv[]) {
 	//	handle arguments
@@ -77,6 +99,12 @@ int main(int argc, char const *argv[]) {
 		if(argv[count][0] == '-') {
 			// Handle options
 			setupOptReg(argv[count]);
+			if (ISENABLE(STOPENABLE)) {
+				gOptRegister |= atoi(argv[count+1]) << LEN_OFFSET;
+				count++;
+				gOptRegister &= ~STOPENABLE;
+				//Clean STOPENABLE bit after enable
+			}
 		} else {
 			// Handle file
 			if (count)
