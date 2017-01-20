@@ -17,7 +17,7 @@ char const gHelp[] =
 "      -l len           : stop after <len> octets.\n"
 "\n"
 "      -h               : Displays this usage screen\n"
-"\n";
+"";
 
 unsigned short gOptRegister = 0;	// Default Options
 
