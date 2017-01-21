@@ -21,9 +21,9 @@ char const gHelp[] =
 
 unsigned short gOptRegister = 0;	// Default Options
 
-#define FLAG_HELP			'h'
-#define FLAG_COLOR			'c'
-#define FLAG_LENGTH			'l'
+#define FLAG_HELP		'h'
+#define FLAG_COLOR		'c'
+#define FLAG_LENGTH		'l'
 
 #define ENABLE_COLOR		0b0000000000000001
 #define ENABLE_USAGE		0b0000000000000010
