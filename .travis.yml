@@ -1,0 +1,6 @@
+os: osx
+osx_image: xcode
+language: c
+script:
+	- make
+	- make clean

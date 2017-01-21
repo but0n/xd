@@ -1,4 +1,5 @@
 # xd
+[![Build Status](https://travis-ci.org/but0n/xd.svg?branch=master)](https://travis-ci.org/but0n/xd)
 
 ![](usage.png)
 
