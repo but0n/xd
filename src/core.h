@@ -35,7 +35,7 @@ unsigned short gOptRegister = 0;	// Default Options
 #define ISENABLE(opt)		gOptRegister & (opt)
 
 #define PRINTCOLOR(color)	{\
-	if(ISENABLE(COLORENABLE))\
+	if(ISENABLE(ENABLE_COLOR))\
 		printf(color);\
 }
 
