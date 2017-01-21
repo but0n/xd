@@ -21,10 +21,10 @@ void handleFile(FILE *fileCache) {
 			printf(" ");	// More readable
 		}
 
-		// handle Ascii detail area
+		// handle Ascii detail area, store current byte
 		ascii[size%16] = ((cache >= '!') && (cache <= '~')) ? cache : BLANK;
 
-		// print this byte
+		// print current byte
 		PRINTCOLOR(TTY_GREEN);
 		printf("%02x ", cache);
 		PRINTCOLOR(TTY_NONE);
@@ -59,16 +59,17 @@ void read(const char *filename) {
 
 void setupOptReg(const char *flag) {
 	while(*++flag) {
+		//TODO: Enhancement
 		switch (*flag) {
 			case FLAG_HELP:
-				gOptRegister |= USAGEENABLE;
+				gOptRegister |= ENABLE_USAGE;
 				PRINTUSAGE();
 				break;
 			case FLAG_COLOR:
-				gOptRegister |= COLORENABLE;
+				gOptRegister |= ENABLE_COLOR;
 				break;
 			case FLAG_LENGTH:
-				gOptRegister |= STOPENABLE;
+				gOptRegister |= ENABLE_STOP;
 				break;
 			default:
 				printf("Error option '%c'\n", *flag);
@@ -94,21 +95,19 @@ int main(int argc, char const *argv[]) {
 		PRINTUSAGE();
 		return -1;
 	}
-	for(int count = 0; count < argc; count++) {
-		//	handle options
+	for(int count = 1; count < argc; count++) {
 		if(argv[count][0] == '-') {
 			// Handle options
 			setupOptReg(argv[count]);
-			if (ISENABLE(STOPENABLE)) {
+			if (ISENABLE(ENABLE_STOP)) {
 				gOptRegister |= atoi(argv[count+1]) << LEN_OFFSET;
 				count++;
-				gOptRegister &= ~STOPENABLE;
-				//Clean STOPENABLE bit after enable
+				gOptRegister &= ~ENABLE_STOP;
+				//Clean ENABLE_STOP bit after enable
 			}
 		} else {
-			// Handle file
-			if (count)
-				read(argv[count]);
+			// Handle infile
+			read(argv[count]);
 		}
 	}
 	return 0;
